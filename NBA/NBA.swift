@@ -21,7 +21,7 @@ struct Provider: IntentTimelineProvider {
     
     func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         var entries: [SimpleEntry] = []
-        
+        WidgetCenter.shared.reloadAllTimelines()
         // Generate a timeline consisting of five entries an hour apart, starting from the current date.
         let currentDate = Date()
         for hourOffset in 0 ..< 5 {
@@ -94,7 +94,6 @@ struct NBAEntryView : View {
 @main
 struct NBA: Widget {
     let kind: String = "NBA"
-    
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
             NBAEntryView(entry: entry)

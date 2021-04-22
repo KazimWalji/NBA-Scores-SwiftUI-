@@ -24,6 +24,7 @@ struct gameHash: Hashable {
 }
 public struct NbaData {
     static func bestGame() -> Game? {
+        print("getting games")
         var games: [Game] = []
         if let events = getData() {
             for event in events {
@@ -73,6 +74,37 @@ public struct NbaData {
         }
         if liveGames.count > 0 {
             games = liveGames + games
+        }
+        print("before")
+        for game in games {
+            game.printGame()
+        }
+        let l = games.count - 1
+        if (l > 0) {
+        for i in 0...(l-1) {
+            for j in 0...(l-i-1) {
+                if games[j].score > games[j+1].score && games[j].inProgress && games[j+1].inProgress{
+                    let temp = games[j]
+                    games[j] = games[j+1]
+                    games[j+1] = temp
+                }
+            }
+        }
+        }
+        if (l > 0) {
+        for i in 0...(l-1) {
+            for j in 0...(l-i-1) {
+                if games[j].quarter < games[j+1].quarter && games[j].inProgress && games[j+1].inProgress{
+                    let temp = games[j]
+                    games[j] = games[j+1]
+                    games[j+1] = temp
+                }
+            }
+        }
+        }
+        print("after")
+        for game in games {
+            game.printGame()
         }
         var gamesHashable: [gameHash] = []
         for game in games {

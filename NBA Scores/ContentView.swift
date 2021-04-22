@@ -6,9 +6,9 @@
 //
 
 import SwiftUI
-
     struct ContentView: View {
-        let games = NbaData.getGames()
+        let timer = Timer.publish(every: 10, on: .init(), in: .common).autoconnect()
+        @State private var games = NbaData.getGames()
         let width =  UIScreen.main.bounds.size.width
         var body: some View {
             NavigationView {
@@ -40,7 +40,11 @@ import SwiftUI
                             
                         }.frame(width: width)
                     }
-                }
+                }.onReceive(timer, perform: { _ in
+                    if games != NbaData.getGames() {
+                        games = NbaData.getGames()
+                    }
+                })
                 .navigationTitle("Games")
             }
         }

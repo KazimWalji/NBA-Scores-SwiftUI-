@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+import WidgetKit
 @main
 struct NBA_ScoresApp: App {
     var body: some Scene {
